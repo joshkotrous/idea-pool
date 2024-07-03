@@ -1,9 +1,27 @@
 import Image from "next/image";
-
+import Button from "@/components/button";
+import Link from "next/link";
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="z-10 w-full max-w-5xl items-center justify-between font-mono text-sm lg:flex">
+    <main className="flex min-h-screen flex-col items-center justify-between">
+      <div className="w-screen h-screen flex flex-col gap-4 justify-center items-center font-bold text-6xl">
+        <div className="flex items-center gap-4">
+          <Image width={75} height={20} alt="brain" src="/brain.svg" />
+          <h1>Idea Pool</h1>
+        </div>
+        <h2 className="font-semibold text-3xl">Crowdsource your ideas.</h2>
+        <div className="flex gap-4">
+          <Link href="/sign-up">
+            <Button className="bg-white text-black font-semibold text-xl h-fit">
+              Sign Up
+            </Button>
+          </Link>
+          <Link href="/login">
+            <Button className="h-fit text-xl">Login</Button>
+          </Link>
+        </div>
+      </div>
+      {/* <div className="z-10 w-full max-w-5xl items-center justify-between font-mono text-sm lg:flex">
         <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
           Get started by editing&nbsp;
           <code className="font-mono font-bold">src/app/page.tsx</code>
@@ -107,7 +125,7 @@ export default function Home() {
             Instantly deploy your Next.js site to a shareable URL with Vercel.
           </p>
         </a>
-      </div>
+      </div> */}
     </main>
   );
 }
