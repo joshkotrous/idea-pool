@@ -5,7 +5,6 @@ import Button from "@/components/button";
 import { FaGoogle, FaGithub } from "react-icons/fa";
 import { signup } from "../api/createUser/route";
 import { googleLogin } from "../api/login/googleLogin";
-
 export default function Page() {
   const signUp = () => {
     signup();
@@ -36,7 +35,8 @@ export default function Page() {
             onClick={loginWithGoogle}
             className="w-full flex justify-center items-center gap-2 p-4"
           >
-            <FaGoogle /> Up With Google
+            <FaGoogle />
+            Sign Up With Google
           </Button>
           <Button className="w-full  flex justify-center items-center gap-2 px-8">
             <FaGithub />

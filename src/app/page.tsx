@@ -1,7 +1,42 @@
+"use client";
+
 import Image from "next/image";
 import Button from "@/components/button";
 import Link from "next/link";
+import { supabase } from "@/utils/supabase/client";
+import { User } from "@supabase/supabase-js";
+import { useState, useEffect, use } from "react";
+import { useRouter } from "next/navigation";
+import { checkLoggedInUser } from "@/utils/auth/checkLoggedInUser";
 export default function Home() {
+  const router = useRouter();
+
+  const [user, setUser] = useState<User | null>(null);
+
+  useEffect(() => {
+    const checkUser = async () => {
+      const user = await checkLoggedInUser();
+      setUser(user);
+    };
+
+    if (typeof window !== "undefined") {
+      checkUser();
+
+      const { data: authListener } = supabase.auth.onAuthStateChange(
+        (event, session) => {
+          setUser(session?.user ?? null);
+          if (session?.user) {
+            router.push("/app");
+          }
+        }
+      );
+
+      return () => {
+        authListener.subscription.unsubscribe();
+      };
+    }
+  }, [router]);
+
   return (
     <main className="flex min-h-screen flex-col items-center justify-between">
       <div className="w-screen h-screen flex flex-col gap-4 justify-center items-center font-bold text-6xl">

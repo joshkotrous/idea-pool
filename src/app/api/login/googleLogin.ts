@@ -2,15 +2,13 @@
 
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
-import { createClient } from "@/utils/supabase/server";
+import { supabase } from "@/utils/supabase/server";
 
 export async function googleLogin() {
-  const supabase = createClient();
-
   const { data, error } = await supabase.auth.signInWithOAuth({
     provider: "google",
     options: {
-      redirectTo: "http://example.com/auth/callback",
+      redirectTo: "/auth/callback",
     },
   });
 
