@@ -64,12 +64,13 @@ const Page = () => {
             <div className="border-2 dark:border-white border-black rounded-xl">
               {presetResponses.map((item, index) => (
                 <div
+                  key={index}
                   className={` flex items-center justify-between ${
                     index != presetResponses.length - 1 &&
                     "border-b-2 dark:border-white border-black"
                   }`}
                 >
-                  <div className={`p-2 w-full `} key={index}>
+                  <div className={`p-2 w-full `}>
                     {
                       //@ts-ignore
                       //TODO need to figure out how to appease TS

@@ -36,12 +36,16 @@ const AppNavigation = () => {
             + new prompt
           </Button>
         </Link>
-        <div className="h-full flex flex-col gap-4 overflow-auto">
+        <div className="h-full flex gap-1 flex-col overflow-auto">
           {prompts &&
             prompts.map((item, index: number) => (
               //@ts-ignore
               //TODO: Need to figure out typescript error here
-              <Link href={`/app/${item.id}`} key={index}>
+              <Link
+                className={`w-full dark:hover:bg-white hover:bg-black dark:hover:text-black hover:text-white rounded-xl p-2 transition-all`}
+                href={`/app/${item.id}`}
+                key={index}
+              >
                 {
                   //@ts-ignore
                   //TODO: Need to figure out typescript error here
