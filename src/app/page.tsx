@@ -8,6 +8,7 @@ import { User } from "@supabase/supabase-js";
 import { useState, useEffect, use } from "react";
 import { useRouter } from "next/navigation";
 import { checkLoggedInUser } from "@/utils/auth/checkLoggedInUser";
+import Logo from "@/components/logo";
 export default function Home() {
   const router = useRouter();
 
@@ -18,41 +19,43 @@ export default function Home() {
       const user = await checkLoggedInUser();
       setUser(user);
     };
+    try {
+      if (typeof window !== "undefined") {
+        checkUser();
 
-    if (typeof window !== "undefined") {
-      checkUser();
-
-      const { data: authListener } = supabase.auth.onAuthStateChange(
-        (event, session) => {
-          setUser(session?.user ?? null);
-          if (session?.user) {
-            router.push("/app");
+        const { data: authListener } = supabase.auth.onAuthStateChange(
+          (event, session) => {
+            setUser(session?.user ?? null);
+            if (session?.user) {
+              router.push("/app");
+            }
           }
-        }
-      );
+        );
 
-      return () => {
-        authListener.subscription.unsubscribe();
-      };
+        return () => {
+          authListener.subscription.unsubscribe();
+        };
+      }
+    } catch (error: any) {
+      console.error(error);
     }
   }, [router]);
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-between">
       <div className="w-screen h-screen flex flex-col gap-4 justify-center items-center font-bold text-6xl">
-        <div className="flex items-center gap-4">
-          <Image width={75} height={20} alt="brain" src="/brain.svg" />
-          <h1>Idea Pool</h1>
-        </div>
+        <Logo />
         <h2 className="font-semibold text-3xl">Crowdsource your ideas.</h2>
         <div className="flex gap-4">
           <Link href="/sign-up">
-            <Button className="bg-white text-black font-semibold text-xl h-fit">
+            <Button className="dark:bg-white bg-black text-white dark:text-black font-semibold text-xl h-fit">
               Sign Up
             </Button>
           </Link>
           <Link href="/login">
-            <Button className="h-fit text-xl">Login</Button>
+            <Button className="h-fit text-xl border-black dark:border-white">
+              Login
+            </Button>
           </Link>
         </div>
       </div>

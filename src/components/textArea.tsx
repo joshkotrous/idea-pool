@@ -5,24 +5,24 @@ interface TextInputProps {
   placeholder?: string;
   value?: string | number;
   name?: string;
-  handleChange?: () => void;
+  onChange?: (event: any) => void;
 }
 
 const TextArea: React.FC<TextInputProps> = ({
   classNames,
   placeholder,
   value,
-  handleChange,
+  onChange,
   name,
 }) => {
   return (
     <textarea
       placeholder={placeholder}
-      onChange={handleChange}
+      onChange={onChange}
       value={value}
       name={name}
       className={cn(
-        "border-2 border-white bg-black rounded-xl p-2 ",
+        "border-2 border-black dark:border-white bg-transparent rounded-xl p-2 ",
         classNames
       )}
     />

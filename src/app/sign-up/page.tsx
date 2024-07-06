@@ -17,7 +17,7 @@ export default function Page() {
   return (
     <div className="w-screen h-screen flex flex-col justify-center items-center gap-4">
       <h2 className="text-4xl font-bold">Sign Up</h2>
-      <div className="w-fit border-2 border-white rounded-xl flex flex-col justify-center items-center p-8 gap-4 ">
+      <div className="w-fit border-2 border-black dark:border-white rounded-xl flex flex-col justify-center items-center p-8 gap-4 ">
         <div className="flex gap-4 w-full">
           <TextInput classNames="w-full" placeholder="First Name..." />
           <TextInput classNames="w-full" placeholder="Last Name..." />
@@ -26,7 +26,10 @@ export default function Page() {
         <TextInput classNames="w-full" placeholder="Email address..." />
         <TextInput classNames="w-full" placeholder="Password..." />
         <div className="w-full">
-          <Button onClick={signUp} className="bg-white text-black w-full">
+          <Button
+            onClick={signUp}
+            className="bg-black dark:bg-white text-white dark:text-black w-full"
+          >
             Sign Up
           </Button>
         </div>
