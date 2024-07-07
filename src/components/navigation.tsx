@@ -31,7 +31,7 @@ const Navigation = () => {
               </Button>
             </Link>
             <Link href="/login">
-              <Button className="h-fit border-black dark:bg-transparent text-black dark:text-white">
+              <Button className="h-fit border-black dark:bg-transparent bg-transparent text-black dark:text-white">
                 Login
               </Button>
             </Link>

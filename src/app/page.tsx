@@ -30,7 +30,7 @@ export default function Home() {
             </Button>
           </Link>
           <Link href="/login">
-            <Button className="h-fit text-xl border-black dark:bg-transparent text-black dark:text-white">
+            <Button className="h-fit text-xl border-black bg-transparent dark:bg-transparent text-black dark:text-white">
               Login
             </Button>
           </Link>
