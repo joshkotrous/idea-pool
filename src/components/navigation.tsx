@@ -7,12 +7,14 @@ import { useState } from "react";
 import { useAuth } from "@/utils/supabase/authProvider";
 import Link from "next/link";
 import Button from "./button";
+import { SignOut } from "@/helpers/sso";
 const Navigation = () => {
   const { user } = useAuth();
   const [showDropDown, setShowDropDown] = useState(false);
 
   const signOut = async () => {
-    const { error } = await supabase.auth.signOut({ scope: "global" });
+    // const { error } = await supabase.auth.signOut();
+    SignOut();
   };
 
   return (
