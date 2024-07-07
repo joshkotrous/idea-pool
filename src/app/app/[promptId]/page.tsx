@@ -5,13 +5,22 @@ import { useParams } from "next/navigation";
 import { supabase } from "@/utils/supabase/client";
 import { Prompt } from "@/types/types";
 import { FaArrowUp } from "react-icons/fa";
+import { useAuth } from "@/utils/supabase/authProvider";
+import TextArea from "@/components/textArea";
+import Button from "@/components/button";
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
+import { motion } from "framer-motion";
 
 const Page = () => {
   const params = useParams();
+  const { user } = useAuth();
   const { promptId } = params;
   const [prompt, setPrompt] = useState<Prompt | undefined>(undefined);
   const [presetResponses, setPresetResponses] = useState([]);
+  const [responses, setResponses] = useState([]);
+  const [newResponse, setNewResponse] = useState("");
   const [votes, setVotes] = useState([]);
+  const [loading, setLoading] = useState(true);
   const getPrompt = async () => {
     try {
       const { data, error } = await supabase
@@ -29,18 +38,26 @@ const Page = () => {
     }
   };
 
-  const getPresetResponses = async () => {
+  const getResponses = async () => {
     try {
       const { data, error } = await supabase
         .from("responses")
         .select("*")
-        .eq("prompt", promptId)
-        .eq("is_preset", true);
+        .eq("prompt", promptId);
+
       if (error) {
         throw error;
       }
+      setResponses(
+        //@ts-ignore
+
+        data.filter(
+          (item) => item.is_preset === false || item.is_preset === null
+        )
+      );
       //@ts-ignore
-      setPresetResponses(data);
+
+      setPresetResponses(data.filter((item) => item.is_preset === true));
     } catch (error: any) {
       console.error(error);
     }
@@ -62,10 +79,38 @@ const Page = () => {
     }
   };
 
+  const addVote = async (responseId: string) => {
+    try {
+      const { data, error } = await supabase
+        .from("votes")
+        .insert([{ response: responseId, user: user.id, prompt: promptId }]);
+
+      getVotes();
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const addResponse = async () => {
+    try {
+      const { data, error } = await supabase
+        .from("responses")
+        .insert([{ prompt: promptId, response: newResponse, user: user.id }]);
+      if (error) {
+        throw error;
+      }
+      setNewResponse("");
+      getResponses();
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   useEffect(() => {
     getPrompt();
-    getPresetResponses();
+    getResponses();
     getVotes();
+    setLoading(false);
   }, []);
 
   useEffect(() => {
@@ -73,11 +118,26 @@ const Page = () => {
     console.log(presetResponses);
     console.log(votes);
   }, [prompt, presetResponses, votes]);
+
+  if (loading) {
+    return (
+      <div className="size-full pt-28 flex justify-center items-center">
+        <motion.div
+          initial={{ rotate: 0 }}
+          animate={{ rotate: 360 }}
+          transition={{ duration: 0.5, repeat: Infinity }}
+        >
+          <AiOutlineLoading3Quarters className="text-2xl" />
+        </motion.div>
+      </div>
+    );
+  }
+
   return (
-    <div className="pt-28 overflow-auto">
-      <div className="flex flex-col gap-4">
+    <div className="pt-28 overflow-auto w-full">
+      <div className="flex flex-col gap-4 w-full">
         <h2 className="text-5xl font-bold">{prompt?.prompt}</h2>
-        {presetResponses && (
+        {presetResponses.length > 0 && (
           <div className="flex flex-col gap-2">
             <h3 className="text-2xl font-semibold">preset responses</h3>
             <div className="border-2 dark:border-white border-black rounded-xl">
@@ -87,6 +147,13 @@ const Page = () => {
 
                   (item) => item.response === response.id
                 ).length;
+                const userVoted =
+                  votes.filter(
+                    (item) =>
+                      //@ts-ignore
+
+                      item.response === response.id && item.user === user.id
+                  ).length > 0;
                 return (
                   <div
                     key={index}
@@ -112,7 +179,15 @@ const Page = () => {
                           }
                         </span>
 
-                        <FaArrowUp className="hover:text-yellow-400 transition-all cursor-pointer" />
+                        <FaArrowUp
+                          onClick={() => {
+                            //@ts-ignore
+                            addVote(response.id);
+                          }}
+                          className={`hover:text-yellow-400 ${
+                            userVoted && "text-yellow-400 "
+                          } transition-all cursor-pointer`}
+                        />
                       </div>
                     </div>
                   </div>
@@ -121,6 +196,79 @@ const Page = () => {
             </div>
           </div>
         )}
+        <div className="flex flex-col gap-2">
+          <h3 className="text-2xl font-semibold">responses</h3>
+          <TextArea
+            value={newResponse}
+            onChange={(event: any) => {
+              setNewResponse(event.target.value);
+            }}
+            placeholder="response..."
+          />
+          <Button
+            onClick={() => {
+              addResponse();
+            }}
+          >
+            Add Response
+          </Button>
+          {responses.length > 0 && (
+            <div className="border-2 dark:border-white border-black rounded-xl">
+              {responses.map((response, index) => {
+                const numVotes = votes.filter(
+                  //@ts-ignore
+
+                  (item) => item.response === response.id
+                ).length;
+                const userVoted =
+                  votes.filter(
+                    (item) =>
+                      //@ts-ignore
+
+                      item.response === response.id && item.user === user.id
+                  ).length > 0;
+                return (
+                  <div
+                    key={index}
+                    className={` flex items-center justify-between ${
+                      index != responses.length - 1 &&
+                      "border-b-2 dark:border-white border-black"
+                    }`}
+                  >
+                    <div className={`p-2 w-full `}>
+                      {
+                        //@ts-ignore
+                        //TODO need to figure out how to appease TS
+                        response.response
+                      }
+                    </div>
+                    <div className="flex w-20 p-2 items-center justify-center">
+                      <div className="border-2 dark:border-white border-black p-2 rounded-xl flex gap-2 items-center">
+                        <span className="text-yellow-400">
+                          {
+                            //@ts-ignore
+                            //TODO need to figure out how to appease TS
+                            numVotes
+                          }
+                        </span>
+
+                        <FaArrowUp
+                          onClick={() => {
+                            //@ts-ignore
+                            addVote(response.id);
+                          }}
+                          className={`hover:text-yellow-400 ${
+                            userVoted && "text-yellow-400 "
+                          } transition-all cursor-pointer`}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );

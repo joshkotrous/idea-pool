@@ -22,7 +22,7 @@ const TextArea: React.FC<TextInputProps> = ({
       value={value}
       name={name}
       className={cn(
-        "border-2 border-black dark:border-white bg-transparent rounded-xl p-2 ",
+        "border-2 border-black dark:border-white bg-transparent rounded-xl p-2 outline-none ",
         classNames
       )}
     />
