@@ -27,6 +27,8 @@ const NewPromptForm: React.FC<NewPromptFormProps> = ({ userId }) => {
     undefined
   );
   const [isLoading, setIsLoading] = useState(false);
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+
   const createPrompt = async () => {
     if (!validateForm()) {
       return;
@@ -61,7 +63,7 @@ const NewPromptForm: React.FC<NewPromptFormProps> = ({ userId }) => {
           }
         }
       }
-      setPromptUrl("https://ideapool.com/app/" + promptId);
+      setPromptUrl(baseUrl + "/app/" + promptId);
       setPromptAdded(true);
     } catch (error: any) {
       console.error(error);
@@ -242,7 +244,12 @@ const NewPromptForm: React.FC<NewPromptFormProps> = ({ userId }) => {
             <div className="overflow-hidden text-ellipsis w-3/4">
               {promptUrl}
             </div>
-            <FaRegClipboard className="cursor-pointer" />
+            <FaRegClipboard
+              onClick={() => {
+                navigator.clipboard.writeText(promptUrl);
+              }}
+              className="cursor-pointer"
+            />
           </div>
           <Link href={promptUrl}>
             <Button>View Prompt</Button>
