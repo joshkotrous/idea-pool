@@ -1,3 +1,5 @@
+"use client";
+
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import Navigation from "@/components/navigation";
@@ -6,10 +8,10 @@ import { AuthProvider } from "@/utils/supabase/authProvider";
 const inter = Inter({ subsets: ["latin"] });
 import { isMobile } from "react-device-detect";
 
-export const metadata: Metadata = {
-  title: "Idea Pool",
-  description: "Crowdsource your ideas.",
-};
+// export const metadata: Metadata = {
+//   title: "Idea Pool",
+//   description: "Crowdsource your ideas.",
+// };
 
 export default function RootLayout({
   children,
