@@ -12,7 +12,7 @@ const Navigation = () => {
   const [showDropDown, setShowDropDown] = useState(false);
 
   const signOut = async () => {
-    const { error } = await supabase.auth.signOut({ scope: "local" });
+    const { error } = await supabase.auth.signOut({ scope: "global" });
   };
 
   return (
