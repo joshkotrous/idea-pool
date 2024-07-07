@@ -4,10 +4,12 @@ import { redirect } from "next/navigation";
 import { supabase } from "@/utils/supabase/client";
 
 export async function GoogleLogin() {
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+
   const { data, error } = await supabase.auth.signInWithOAuth({
     provider: "google",
     options: {
-      redirectTo: "/auth/callback",
+      redirectTo: baseUrl,
       queryParams: {
         access_type: "offline",
         prompt: "consent",
