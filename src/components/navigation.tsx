@@ -68,7 +68,7 @@ const Navigation = () => {
         onClick={() => {
           setShowMenu(false);
         }}
-        className={`absolute w-full h-full top-0 left-0 bg-black/10 ${
+        className={`fixed w-full h-full top-0 left-0 bg-black/10 ${
           !showMenu && " hidden"
         }`}
       >

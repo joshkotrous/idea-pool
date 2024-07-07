@@ -19,7 +19,7 @@ export default function RootLayout({
   return (
     <AuthProvider>
       <main className="flex flex-col p-4 pt-2 h-screen max-h-screen overflow-hidden items-center">
-        <div className="flex w-full max-h-screen max-w-[1024px] gap-4">
+        <div className="flex w-full h-full max-h-screen max-w-[1024px] gap-4">
           <Navigation />
           {isMobile && <AppNavigation />}
           {children}
