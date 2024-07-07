@@ -8,6 +8,10 @@ export async function GoogleLogin() {
     provider: "google",
     options: {
       redirectTo: "/auth/callback",
+      queryParams: {
+        access_type: "offline",
+        prompt: "consent",
+      },
     },
   });
 
