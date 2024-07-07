@@ -85,7 +85,7 @@ const Navigation = () => {
                 </Button>
               </Link>
               <Link href="/login">
-                <Button className="h-fit border-black bg-transparent text-black dark:text-white w-full">
+                <Button className="h-fit border-black dark:bg-transparent text-black dark:text-white w-full">
                   Login
                 </Button>
               </Link>
