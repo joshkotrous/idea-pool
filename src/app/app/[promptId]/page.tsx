@@ -10,7 +10,7 @@ import TextArea from "@/components/textArea";
 import Button from "@/components/button";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { motion } from "framer-motion";
-
+import Spinner from "@/components/spinner";
 const Page = () => {
   const params = useParams();
   const { user } = useAuth();
@@ -134,17 +134,7 @@ const Page = () => {
   }, [prompt, presetResponses, votes]);
 
   if (loading) {
-    return (
-      <div className="size-full pt-28 flex justify-center items-center">
-        <motion.div
-          initial={{ rotate: 0 }}
-          animate={{ rotate: 360 }}
-          transition={{ duration: 0.5, repeat: Infinity }}
-        >
-          <AiOutlineLoading3Quarters className="text-2xl" />
-        </motion.div>
-      </div>
-    );
+    return <Spinner />;
   }
 
   return (

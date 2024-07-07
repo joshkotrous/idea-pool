@@ -11,7 +11,7 @@ import { DatePicker } from "./shadcn/datePicker";
 import { FaCheckCircle } from "react-icons/fa";
 import { FaRegClipboard } from "react-icons/fa";
 import Link from "next/link";
-
+import Spinner from "./spinner";
 interface NewPromptFormProps {
   userId?: string;
 }
@@ -26,6 +26,7 @@ const NewPromptForm: React.FC<NewPromptFormProps> = ({ userId }) => {
   const [errorMessage, setErrorMessage] = useState<string | undefined>(
     undefined
   );
+  const [isLoading, setIsLoading] = useState(false);
   const createPrompt = async () => {
     if (!validateForm()) {
       return;
@@ -76,6 +77,7 @@ const NewPromptForm: React.FC<NewPromptFormProps> = ({ userId }) => {
   };
 
   const generateResponse = async () => {
+    setIsLoading(true);
     try {
       const response = await fetch("/api/generateResponses", {
         method: "POST",
@@ -97,6 +99,7 @@ const NewPromptForm: React.FC<NewPromptFormProps> = ({ userId }) => {
     } catch (error: any) {
       console.error(error);
     }
+    setIsLoading(false);
   };
 
   const removePresetResponse = (index: number) => {
@@ -187,15 +190,20 @@ const NewPromptForm: React.FC<NewPromptFormProps> = ({ userId }) => {
             >
               Add Response
             </Button>
-            <button
-              onClick={() => {
-                generateResponse();
-              }}
-              className="flex gap-1 text-sm items-center w-fit"
-            >
-              <HiSparkles className="text-lg" />
-              Generate responses
-            </button>
+            <div className="flex gap-2">
+              <button
+                onClick={() => {
+                  generateResponse();
+                }}
+                className="flex gap-1 text-sm items-center w-fit"
+              >
+                <HiSparkles className="text-lg" />
+                Generate responses
+              </button>
+              {isLoading && (
+                <Spinner classNames="p-0 w-fit" spinnerSize="text-sm" />
+              )}{" "}
+            </div>
           </div>
           <div className="flex flex-col w-full gap-2">
             <div className="flex gap-2 items-center">
