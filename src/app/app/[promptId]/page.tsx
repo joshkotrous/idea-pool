@@ -81,9 +81,15 @@ const Page = () => {
 
   const addVote = async (responseId: string) => {
     try {
-      const { data, error } = await supabase
-        .from("votes")
-        .insert([{ response: responseId, user: user.id, prompt: promptId }]);
+      if (user) {
+        const { data, error } = await supabase
+          .from("votes")
+          .insert([{ response: responseId, user: user.id, prompt: promptId }]);
+      } else {
+        const { data, error } = await supabase
+          .from("votes")
+          .insert([{ response: responseId, prompt: promptId }]);
+      }
 
       getVotes();
     } catch (error) {

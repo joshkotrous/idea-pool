@@ -31,7 +31,7 @@ const AppNavigation = () => {
 
   useEffect(() => {
     getPrompts();
-  }, []);
+  }, [user]);
 
   if (user) {
     return (
