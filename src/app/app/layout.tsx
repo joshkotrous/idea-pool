@@ -4,6 +4,8 @@ import Navigation from "@/components/navigation";
 import AppNavigation from "@/components/appNavigation";
 import { AuthProvider } from "@/utils/supabase/authProvider";
 const inter = Inter({ subsets: ["latin"] });
+import { isMobile } from "react-device-detect";
+
 export const metadata: Metadata = {
   title: "Idea Pool",
   description: "Crowdsource your ideas.",
@@ -19,7 +21,7 @@ export default function RootLayout({
       <main className="flex flex-col p-4 pt-2 h-screen max-h-screen overflow-hidden items-center">
         <div className="flex w-full max-h-screen max-w-[1024px] gap-4">
           <Navigation />
-          <AppNavigation />
+          {isMobile && <AppNavigation />}
           {children}
         </div>
       </main>

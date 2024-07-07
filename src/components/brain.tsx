@@ -1,12 +1,11 @@
 import React from "react";
-
-const Brain = () => {
+const Brain: React.FC<{ classNames?: string }> = ({ classNames }) => {
   return (
     <svg
       id="Layer_2"
       data-name="Layer 2"
       xmlns="http://www.w3.org/2000/svg"
-      className="size-16"
+      className={classNames}
       viewBox="0 0 197.21 172.56"
     >
       <g id="Layer_1-2" data-name="Layer 1">

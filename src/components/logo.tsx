@@ -15,7 +15,7 @@ const Logo: React.FC<LogoProps> = ({
 }) => {
   return (
     <div className={cn("flex items-center gap-4 w-fit", classNames)}>
-      <Brain />
+      <Brain classNames="size-10 md:size-16" />
       {/* <Image
         className="[fill: black]"
         width={imageWidth}
