@@ -1,7 +1,7 @@
-"use server";
+"use client";
 
 import { redirect } from "next/navigation";
-import { supabase } from "@/utils/supabase/server";
+import { supabase } from "@/utils/supabase/client";
 
 export async function GoogleLogin() {
   const { data, error } = await supabase.auth.signInWithOAuth({
