@@ -138,8 +138,8 @@ const Page = () => {
   }
 
   return (
-    <div className="pt-28 overflow-auto w-full">
-      <div className="flex flex-col gap-4 w-full">
+    <div className=" w-full">
+      <div className="flex flex-col gap-4 w-full ">
         <h2 className="text-5xl font-bold">{prompt?.prompt}</h2>
         {presetResponses.length > 0 && (
           <div className="flex flex-col gap-2">
