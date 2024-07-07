@@ -112,11 +112,19 @@ const Page = () => {
     }
   };
 
-  useEffect(() => {
-    getPrompt();
-    getResponses();
-    getVotes();
+  const init = async () => {
+    await getPrompt();
+    await getResponses();
+    await getVotes();
     setLoading(false);
+  };
+
+  useEffect(() => {
+    // getPrompt();
+    // getResponses();
+    // getVotes();
+    // setLoading(false);
+    init();
   }, []);
 
   useEffect(() => {
