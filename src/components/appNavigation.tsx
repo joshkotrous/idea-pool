@@ -13,7 +13,10 @@ const AppNavigation = () => {
 
   const getPrompts = async () => {
     try {
-      let { data, error } = await supabase.from("prompts").select("*");
+      let { data, error } = await supabase
+        .from("prompts")
+        .select("*")
+        .eq("user", user.id);
       if (data) {
         setPrompts(data);
       }
