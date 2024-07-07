@@ -73,7 +73,7 @@ const Navigation = () => {
         }`}
       >
         <div
-          className={` h-full w-fit bg-white left-0 top-0 flex flex-col justify-between pb-4`}
+          className={` h-full w-fit bg-white dark:bg-black left-0 top-0 flex flex-col justify-between pb-4`}
         >
           <AppNavigation disableBorders={true} disableGlobalPadding={true} />
 
