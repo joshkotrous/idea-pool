@@ -147,13 +147,17 @@ const Page = () => {
 
                   (item) => item.response === response.id
                 ).length;
-                const userVoted =
-                  votes.filter(
-                    (item) =>
-                      //@ts-ignore
+                let userVoted;
+                if (user) {
+                  userVoted =
+                    votes.filter(
+                      (item) =>
+                        //@ts-ignore
 
-                      item.response === response.id && item.user === user.id
-                  ).length > 0;
+                        item.response === response.id && item.user === user.id
+                    ).length > 0;
+                }
+
                 return (
                   <div
                     key={index}
@@ -220,13 +224,17 @@ const Page = () => {
 
                   (item) => item.response === response.id
                 ).length;
-                const userVoted =
-                  votes.filter(
-                    (item) =>
-                      //@ts-ignore
+                let userVoted;
+                if (user) {
+                  userVoted =
+                    votes.filter(
+                      (item) =>
+                        //@ts-ignore
 
-                      item.response === response.id && item.user === user.id
-                  ).length > 0;
+                        item.response === response.id && item.user === user.id
+                    ).length > 0;
+                }
+
                 return (
                   <div
                     key={index}
