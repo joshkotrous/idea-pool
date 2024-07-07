@@ -3,22 +3,21 @@
 import TextInput from "@/components/textInput";
 import Button from "@/components/button";
 import { FaGoogle, FaGithub } from "react-icons/fa";
-import { signup } from "../api/createUser/route";
-import { googleLogin } from "../api/login/googleLogin";
+import { GoogleLogin, GitHubLogin } from "@/helpers/sso";
 export default function Page() {
-  const signUp = () => {
-    signup();
+  const loginWithGoogle = async () => {
+    GoogleLogin();
   };
 
-  const loginWithGoogle = () => {
-    googleLogin();
+  const loginWithGithub = async () => {
+    GitHubLogin();
   };
 
   return (
     <div className="w-screen h-screen flex flex-col justify-center items-center gap-4">
       <h2 className="text-4xl font-bold">Sign Up</h2>
       <div className="w-fit border-2 border-black dark:border-white rounded-xl flex flex-col justify-center items-center p-8 gap-4 ">
-        <div className="flex gap-4 w-full">
+        {/* <div className="flex gap-4 w-full">
           <TextInput classNames="w-full" placeholder="First Name..." />
           <TextInput classNames="w-full" placeholder="Last Name..." />
         </div>
@@ -32,7 +31,7 @@ export default function Page() {
           >
             Sign Up
           </Button>
-        </div>
+        </div> */}
         <div className="grid grid-cols-2 grid-flow-col auto-cols-fr gap-4 text-lg w-full">
           <Button
             onClick={loginWithGoogle}
@@ -41,7 +40,10 @@ export default function Page() {
             <FaGoogle />
             Sign Up With Google
           </Button>
-          <Button className="w-full  flex justify-center items-center gap-2 px-8">
+          <Button
+            onClick={loginWithGithub}
+            className="w-full  flex justify-center items-center gap-2 px-8"
+          >
             <FaGithub />
             Sign Up With GitHub
           </Button>
